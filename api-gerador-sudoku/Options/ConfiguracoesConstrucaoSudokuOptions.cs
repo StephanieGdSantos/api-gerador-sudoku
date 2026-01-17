@@ -9,5 +9,8 @@ namespace api_gerador_sudoku.Options
 
         [Required]
         public int[] NumerosPossiveisPorQuadrado { get; set; }
+
+        [Required]
+        public int OrdemGradePadrao { get; set; }
     }
 }
