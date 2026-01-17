@@ -1,12 +1,17 @@
-﻿using APIGeradorSudoku.Composites;
+﻿using api_gerador_sudoku.Options;
+using APIGeradorSudoku.Composites;
 using APIGeradorSudoku.Entities;
+using Microsoft.Extensions.Options;
 
 namespace APIGeradorSudoku.Buiders.Impl
 {
-    public class SudokuBuilderImpl(IQuadradoComposite quadradoComposite) : ISudokuBuilder
+    public class SudokuBuilderImpl(IQuadradoComposite quadradoComposite,
+        IOptions<ConfiguracoesConstrucaoSudokuOptions> configuracoesConstrucaoSudokuOptions) : ISudokuBuilder
     {
         private readonly IQuadradoComposite _quadradoComposite = quadradoComposite;
-        private readonly int _numeroMaximoTentativas = 3;
+        private readonly ConfiguracoesConstrucaoSudokuOptions
+            _configuracoesConstrucaoSudokuOptions = 
+            configuracoesConstrucaoSudokuOptions.Value;
 
         public Sudoku CriarSudoku(int tamanhoGrade)
         {
@@ -34,7 +39,7 @@ namespace APIGeradorSudoku.Buiders.Impl
                         };
 
                         quadradoBemSucedido = _quadradoComposite.TentarPreencherQuadradoNVezes(blocoDeQuadradoAtual,
-                            ref sudoku, _numeroMaximoTentativas);
+                            ref sudoku, _configuracoesConstrucaoSudokuOptions.NumeroMaximoTentativas);
 
                         if (quadradoBemSucedido == false && inicioColunaQuadrado == 0)
                             break;

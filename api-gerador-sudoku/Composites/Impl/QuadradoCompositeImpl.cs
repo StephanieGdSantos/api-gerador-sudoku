@@ -1,17 +1,16 @@
-﻿using APIGeradorSudoku.Entities;
+﻿using api_gerador_sudoku.Options;
+using APIGeradorSudoku.Entities;
 using APIGeradorSudoku.Iterator;
+using Microsoft.Extensions.Options;
 
 namespace APIGeradorSudoku.Composites.Impl
 {
-    public class QuadradoCompositeImpl : IQuadradoComposite
+    public class QuadradoCompositeImpl(IOptions<ConfiguracoesConstrucaoSudokuOptions> 
+        configuracoesConstrucaoSudokuOptions) : IQuadradoComposite
     {
-        private readonly int[] _numerosPossiveis = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-        private readonly Random _random;
-
-        public QuadradoCompositeImpl()
-        {
-            _random = new Random();
-        }
+        private readonly ConfiguracoesConstrucaoSudokuOptions 
+            _configuracoesConstrucaoSudokuOptions = configuracoesConstrucaoSudokuOptions.Value;
+        private readonly Random _random = new();
 
         private void LimparQuadrado(BlocoDeQuadrado quadradoInternoSudoku, ref Sudoku gradeSudoku)
         {
@@ -35,7 +34,10 @@ namespace APIGeradorSudoku.Composites.Impl
                     var numerosJaUtilizados = SudokuIterator.ObterNumerosJaUtilizadosNaGrade(gradeSudoku,
                         numerosJaUtilizadosNoQuadrado, linha, coluna);
 
-                    var possibilidadeDeNumerosAtualmente = _numerosPossiveis.Except(numerosJaUtilizados).ToArray();
+                    var possibilidadeDeNumerosAtualmente = _configuracoesConstrucaoSudokuOptions
+                        .NumerosPossiveisPorQuadrado
+                        .Except(numerosJaUtilizados)
+                        .ToArray();
 
                     if (possibilidadeDeNumerosAtualmente.Count() == 0)
                     {
