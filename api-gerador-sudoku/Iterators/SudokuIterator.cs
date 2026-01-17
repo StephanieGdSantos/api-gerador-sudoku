@@ -30,19 +30,5 @@ namespace APIGeradorSudoku.Iterator
 
             return numerosJaUtilizados;
         }
-
-        public static List<int> ObterNumerosJaUtilizadosNoQuadrado(Sudoku gradeSudoku, BlocoDeQuadrado quadradoInternoSudoku)
-        {
-            var numerosJaUtilizados = new List<int>();
-            for (int linha = quadradoInternoSudoku.InicioLinha; linha < quadradoInternoSudoku.FimLinha; linha++)
-            {
-                for (int coluna = quadradoInternoSudoku.InicioColuna; coluna < quadradoInternoSudoku.FimColuna; coluna++)
-                {
-                    if (!numerosJaUtilizados.Contains(gradeSudoku.Grade[linha, coluna]))
-                        numerosJaUtilizados.Add(gradeSudoku.Grade[linha, coluna]);
-                }
-            }
-            return numerosJaUtilizados;
-        }
     }
 }
