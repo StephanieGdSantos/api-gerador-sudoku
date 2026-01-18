@@ -7,8 +7,7 @@ namespace APIGeradorSudoku.Entities.Options
         [Required]
         public int NumeroMaximoTentativas { get; set; }
 
-        [Required]
-        public int[] NumerosPossiveisPorQuadrado { get; set; }
+        public int[]? NumerosPossiveisPorQuadrado { get; set; }
 
         [Required]
         public int OrdemGradePadrao { get; set; }
